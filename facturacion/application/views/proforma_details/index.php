@@ -14,11 +14,7 @@
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="row breadcrumbs-top">
                             <div class="col-12">
-<<<<<<< HEAD
                                 <h2 class="content-header-title float-start mb-0">Agregar Proforma</h2>
-=======
-                                <h2 class="content-header-title float-start mb-0">Ventas por Boleta y Factura</h2>
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                             </div>
                         </div>
                     </div>
@@ -33,16 +29,11 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div>
-<<<<<<< HEAD
                                         <label class="form-label">👤Cliente(*)</label>
-=======
-                                        <label class="form-label">Cliente(*)</label>
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                                         <select name="business_name_cli" class="form-select select2" required>
                                             <!-- Opciones para el select -->
                                         </select>
                                     </div>
-<<<<<<< HEAD
                                 </div>
                                 <script src="../billingpersale_details/js/index.js"></script>
 
@@ -53,29 +44,11 @@
 
                                 <div class="col-md-2 col-lg-1.5" style="width: 12.5%;">
                                     <label class="form-label">💰Moneda</label>
-=======
-                                </div><script src="../billingpersale_details/js/index.js"></script>
-                                <div class="col-md-2 col-lg-auto col-xl-1.5">
-                                    <label class="form-label">Fecha Emisión (*)</label>
-                                    <input name="fecha_emision" type="date" class="form-control" id="fecha_emision">
-                                </div>
-                                <div class="col-md-2 col-lg-auto col-xl-1.5">
-                                    <label class="form-label">Fecha Vencimiento (*)</label>
-                                    <input name="fecha_vencimiento" type="date" class="form-control">
-                                </div>
-                                
-                                <div class="col-md-2 col-lg-1.5" style="width: 12.5%;">
-                                    <label class="form-label">Moneda</label>
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                                     <span name="coins" class="form-control"></span>
                                     <input name="coins" type="hidden" class="form-control" readonly>
                                 </div>
                                 <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1">
-<<<<<<< HEAD
                                     <label class="form-label">💵Impuesto</label>
-=======
-                                    <label class="form-label">Impuesto</label>
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                                     <input name="igv" type="text" class="form-control" readonly>
                                 </div>
                             </div>
@@ -91,46 +64,25 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div>
-<<<<<<< HEAD
                                         <label class="form-label">🚚Tiempo de entrega(*)</label>
-=======
-                                        <label class="form-label">Forma Pago(*)</label>
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                                         <select name="fp_description" class="form-select select2" data-msg="" required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div>
-<<<<<<< HEAD
                                         <label class="form-label">⏳validez de oferta(*)</label>
-=======
-                                        <label class="form-label">Tipo Comprobante(*)</label>
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                                         <select name="vt_description" class="form-select select2" data-msg="" required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-<<<<<<< HEAD
 
                                 </div>
                             </div>
 
                             <input type="hidden" name="id_user" id="id_user">
 
-=======
-                                    <div>
-                                        <label class="form-label">Medio Pago(*)</label>
-                                        <select name="pt_description" class="form-select select2" data-msg="" required>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <input type="hidden" name="id_user" id="id_user">
-                            
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_income_product_modal">Agregar productos</button>

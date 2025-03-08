@@ -18,8 +18,4 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'db_gliese');
-<<<<<<< HEAD
 define('DB_PORT', 3307);
-=======
-define('DB_PORT', 3306);
->>>>>>> 274942dea46fca33cbed907a631f1daf8ffbc740
