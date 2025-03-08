@@ -91,7 +91,7 @@ function create_proforma(form) {
     params.append('id_user', window.current_user_id);
 
     $.ajax({
-        url: BASE_URL + "Proforma_Details/create_Proforma",
+        url: BASE_URL + "proforma_Details/create_proforma",
         type: "POST",
         data: params,
         processData: false,
@@ -108,7 +108,7 @@ function create_proforma(form) {
                     confirmButtonText: 'OK',
                     allowOutsideClick: false
                 }).then(() => {
-                    window.location.href = BASE_URL + 'proforma/index.php';
+                    window.location.href = BASE_URL + 'Billingpersale/index.php';
                 });
             } else {
                 functions.toast_message(response.type, response.msg, response.status);
@@ -128,7 +128,7 @@ function create_proforma(form) {
 }
 
 $(document).ready(function () {
-    $("#btn_create_form2").on("click", function (e) {
+    $("#btn_create_form").on("click", function (e) {
         e.preventDefault();
         $("#create_income_details_form").submit();
     });
