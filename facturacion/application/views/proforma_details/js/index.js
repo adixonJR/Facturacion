@@ -128,7 +128,7 @@ function create_proforma(form) {
 }
 
 $(document).ready(function () {
-    $("#btn_create_form").on("click", function (e) {
+    $("#btn_create_form2").on("click", function (e) {
         e.preventDefault();
         $("#create_income_details_form").submit();
     });

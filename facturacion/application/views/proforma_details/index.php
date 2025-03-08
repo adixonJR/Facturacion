@@ -178,7 +178,7 @@
                             </div>
                             <!-- /Table -->
                             <div class="col-12">
-                                <button id="btn_create_form" type="submit" class="btn btn-primary">Guardar</button>
+                                <button id="btn_create_form2" type="submit" class="btn btn-primary">Guardar</button>
                                 <button type="button" id="btn_cancel_form" class="btn btn-secondary">Cancelar</button>
                             </div>
                         </form>
