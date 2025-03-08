@@ -7,7 +7,7 @@
         </div>
         <div class="content-body">
             <!-- Campus Starts -->
-            <section id="billingpersale_details">
+            <section id="proforma_details">
 
                 <!-- Header title -->
                 <div class="content-header row">
@@ -35,8 +35,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                <script src="../billingpersale_details/js/index.js"></script>
-
+                                <script src="../proforma_details/js/index.js"></script>
+                                <div class="col-md-2 col-lg-auto col-xl-1.5">
+                                    <label class="form-label">Fecha Emisión (*)</label>
+                                    <input name="fecha_emision" type="date" class="form-control" id="fecha_emision">
+                                </div>
                                 <div class="col-md-2 col-lg-auto col-xl-1.5">
                                     <label class="form-label">📅Fecha(*)</label>
                                     <input name="fecha_vencimiento" type="date" class="form-control">
@@ -64,20 +67,24 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div>
-                                        <label class="form-label">🚚Tiempo de entrega(*)</label>
+                                        <label class="form-label">Forma Pago(*)</label>
                                         <select name="fp_description" class="form-select select2" data-msg="" required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div>
-                                        <label class="form-label">⏳validez de oferta(*)</label>
+                                        <label class="form-label">Tipo Comprobante(*)</label>
                                         <select name="vt_description" class="form-select select2" data-msg="" required>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-
+                                    <div>
+                                        <label class="form-label">Medio Pago(*)</label>
+                                        <select name="pt_description" class="form-select select2" data-msg="" required>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

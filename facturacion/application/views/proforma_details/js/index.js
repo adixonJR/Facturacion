@@ -85,13 +85,13 @@ function load_datatable_income_products(id_campus) {
     });
 }
 
-function create_billingpersale(form) {
+function create_proforma(form) {
     let params = new FormData(form);
     params.append('id_campus', window.id_campus);
     params.append('id_user', window.current_user_id);
 
     $.ajax({
-        url: BASE_URL + "Billingpersale_Details/create_billingpersale",
+        url: BASE_URL + "Proforma_Details/create_Proforma",
         type: "POST",
         data: params,
         processData: false,
@@ -108,7 +108,7 @@ function create_billingpersale(form) {
                     confirmButtonText: 'OK',
                     allowOutsideClick: false
                 }).then(() => {
-                    window.location.href = BASE_URL + 'Billingpersale/index.php';
+                    window.location.href = BASE_URL + 'proforma/index.php';
                 });
             } else {
                 functions.toast_message(response.type, response.msg, response.status);
