@@ -82,7 +82,11 @@ function load_datatable() {
                         ' ' +
                         '<button class="btn btn-sm btn-light btn-round btn-icon btn_pdf" data-process-key="' + row.id_proforma + '_2" target="_blank">' +
                         '<img src="' + BASE_URL + 'public/app-assets/images/svg/receipt.svg" style="width: 25px; height: 25px;" alt="File Text">' +
+                        '</button>' +
+                        '<button class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="' + row.id_proforma + '">' +
+                        '<i class="fa fa-trash" aria-hidden="true" style="font-size: 20px;"></i>' +
                         '</button>'
+                    
                     );
                 }
             },
