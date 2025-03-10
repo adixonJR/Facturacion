@@ -35,14 +35,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                <script src="../proforma_details/js/index.js"></script>
-                                <div class="col-md-2 col-lg-auto col-xl-1.5">
-                                    <label class="form-label">Fecha Emisión (*)</label>
-                                    <input name="fecha_emision" type="date" class="form-control" id="fecha_emision">
-                                </div>
                                 <div class="col-md-2 col-lg-auto col-xl-1.5">
                                     <label class="form-label">📅Fecha(*)</label>
-                                    <input name="fecha_vencimiento" type="date" class="form-control">
+                                    <input name="fecha" type="date" class="form-control">
                                 </div>
 
                                 <div class="col-md-2 col-lg-1.5" style="width: 12.5%;">
@@ -58,33 +53,12 @@
                             <!-- Second Row -->
                             <div class="row mb-2">
                                 <div class="col-md-2">
-                                    <label class="form-label">Nº de documento</label>
-                                    <input name="document_number_cli" type="text" class="form-control" readonly>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label">Dirección</label>
-                                    <input name="address_cli" type="text" class="form-control" readonly>
+                                    <label class="form-label">Tiempo de Entrega</label>
+                                    <input name="tiempo_entrega" type="text" class="form-control">
                                 </div>
                                 <div class="col-md-2">
-                                    <div>
-                                        <label class="form-label">Forma Pago(*)</label>
-                                        <select name="fp_description" class="form-select select2" data-msg="" required>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div>
-                                        <label class="form-label">Tipo Comprobante(*)</label>
-                                        <select name="vt_description" class="form-select select2" data-msg="" required>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div>
-                                        <label class="form-label">Medio Pago(*)</label>
-                                        <select name="pt_description" class="form-select select2" data-msg="" required>
-                                        </select>
-                                    </div>
+                                    <label class="form-label">Validez de Oferta</label></label>
+                                    <input name="validez_oferta" type="text" class="form-control">
                                 </div>
                             </div>
 

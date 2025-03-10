@@ -4,7 +4,7 @@ class C_Proforma extends Controller {
 
     // --
     public function __construct() {
-		parent::__construct();
+        parent::__construct();
     }
     
     // --
@@ -20,262 +20,54 @@ class C_Proforma extends Controller {
 
     // --
     public function get_proforma() { 
-      // --
-      $this->functions->validate_session($this->segment->get('isActive'));
-      // --
-      $request = $_SERVER['REQUEST_METHOD'];
-      // --
-      if ($request === 'GET') {
-          // --
-          $input = json_decode(file_get_contents('php://input'), true);
-          if (empty($input)) {
-              $input = filter_input_array(INPUT_GET);
-          }
-          // --
-          $obj = $this->load_model('Proforma');
-          // --
-          $response = $obj->get_proforma();
-          // --
-          switch ($response['status']) {
-              // --
-              case 'OK':
-                  // --
-                  $json = array(
-                      'status' => 'OK',
-                      'type' => 'success',
-                      'msg' => 'Listado de registros encontrados.',
-                      'data' => $response['result']
-                  );
-                  // --
-                  break;
-  
-              case 'ERROR':
-                  // --
-                  $json = array(
-                      'status' => 'ERROR',
-                      'type' => 'warning',
-                      'msg' => 'No se encontraron registros en el sistema.',
-                      'data' => array(),
-                  );
-                  // --
-                  break;
-  
-              case 'EXCEPTION':
-                  // --
-                  $json = array(
-                      'status' => 'ERROR',
-                      'type' => 'error',
-                      'msg' => $response['result']->getMessage(),
-                      'data' => array()
-                  );
-                  // --
-                  break;
-          }
-          
-      } else {
-          // --
-          $json = array(
-              'status' => 'ERROR',
-              'type' => 'error',
-              'msg' => 'Método no permitido.',
-              'data' => array()
-          ); 
-      }
-  
-      // --
-      header('Content-Type: application/json');
-      echo json_encode($json);
-    }
-  
-    // --
-    public function get_client_by_id() {
-      // --
-      $this->functions->validate_session($this->segment->get('isActive'));
-      // --
-      $request = $_SERVER['REQUEST_METHOD'];
-      // --
-      if ($request === 'GET') {
-          // --
-          $input = json_decode(file_get_contents('php://input'), true);
-          if (empty($input)) {
-              $input = filter_input_array(INPUT_GET);
-          }
-          // --
-          if (!empty($input['id_clients'])) {
-              // --
-              $obj = $this->load_model('Clients');
-              // --
-              $bind = array(
-                  'id_clients' => intval($input['id_clients']));
-              // --
-              $response = $obj->get_client_by_id($bind);
-              // --
-              switch ($response['status']) {
-                  // --
-                  case 'OK':
-                      // --
-                      $json = array(
-                          'status' => 'OK',
-                          'type' => 'success',
-                          'msg' => 'Listado de registros encontrados.',
-                          'data' => $response['result']
-                      );
-                      // --
-                      break;
-  
-                  case 'ERROR':
-                      // --
-                      $json = array(
-                          'status' => 'ERROR',
-                          'type' => 'warning',
-                          'msg' => 'No se encontraron registros en el sistema.',
-                          'data' => array(),
-                      );
-                      // --
-                      break;
-  
-                  case 'EXCEPTION':
-                      // --
-                      $json = array(
-                          'status' => 'ERROR',
-                          'type' => 'error',
-                          'msg' => $response['result']->getMessage(),
-                          'data' => array()
-                      );
-                      // --
-                      break;
-              }
-          } else {
-              // --
-              $json = array(
-                  'status' => 'ERROR',
-                  'type' => 'warning',
-                  'msg' => 'No se enviaron los campos necesarios, verificar.',
-                  'data' => array()
-              );
-          }
-      
-      } else {
-          // --
-          $json = array(
-              'status' => 'ERROR',
-              'type' => 'error',
-              'msg' => 'Método no permitido.',
-              'data' => array()
-          ); 
-      }
-  
-      // --
-      header('Content-Type: application/json');
-      echo json_encode($json);
-    }
-  
-    // --
-    public function create_clients() {
         // --
         $this->functions->validate_session($this->segment->get('isActive'));
         // --
         $request = $_SERVER['REQUEST_METHOD'];
         // --
-        if ($request === 'POST') {
+        if ($request === 'GET') {
             // --
             $input = json_decode(file_get_contents('php://input'), true);
             if (empty($input)) {
-                $input = filter_input_array(INPUT_POST);
+                $input = filter_input_array(INPUT_GET);
             }
             // --
-            if (!empty($input['document_type']) &&
-                !empty($input['name']) &&
-                !empty($input['document_number']) &&
-                !empty($input['address']) &&
-                !empty($input['phone']) &&
-                !empty($input['business_name']) &&
-                !empty($input['email']) &&
-                !empty($input['description_document_type'])
-            ) {
+            $obj = $this->load_model('Proforma');
+            // --
+            $response = $obj->get_proforma();
+            // --
+            switch ($response['status']) {
                 // --
-                $document_type = $this->functions->clean_string($input['document_type']);
-                $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
-                $document_number = $this->functions->clean_string($input['document_number']);
-                $description_document_type = $this->functions->clean_string($input['description_document_type']);
-                $address = $this->functions->clean_string($input['address']);
-                $phone = $this->functions->clean_string($input['phone']);
-                $business_name = $this->functions->clean_string($input['business_name']); 
-                $email = $this->functions->clean_string($input['email']);
-                // --
-                $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
-                // --
-                if ($is_verified) {
-                    $bind = array(
-                        'id_document_type' => $document_type,
-                        'name' => $name,
-                        'document_number' => $document_number,
-                        'address' => $address,
-                        'phone' => $phone,
-                        'business_name' => $business_name,
-                        'email' => $email
+                case 'OK':
+                    // --
+                    $json = array(
+                        'status' => 'OK',
+                        'type' => 'success',
+                        'msg' => 'Listado de registros encontrados.',
+                        'data' => $response['result']
                     );
-                    
-                    // --
-                    $obj = $this->load_model('Clients');
-                    $response = $obj->create_clients($bind);
-                    // --
-                    switch ($response['status']) {
-                        // --
-                        case 'OK':
-                            // --
-                            $json = array(
-                                'status' => 'OK',
-                                'type' => 'success',
-                                'msg' => 'Registro almacenado en el sistema con éxito.',
-                                // 'msg' => ,
-                                'data' => array()
-                            );
-                            // --
-                            break;
+                    break;
   
-                        case 'ERROR':
-                            // --
-                            $json = array(
-                                'status' => 'ERROR',
-                                'type' => 'warning',
-                                'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                                'data' => array(),
-                            );
-                            // --
-                            break;
-  
-                        case 'EXCEPTION':
-                            // --
-                            $json = array(
-                                'status' => 'ERROR',
-                                'type' => 'error',
-                                'msg' => $response['result']->getMessage(),
-                                'data' => array()
-                            );
-                            // --
-                            break;
-                    }
-                } else {
+                case 'ERROR':
                     // --
                     $json = array(
                         'status' => 'ERROR',
                         'type' => 'warning',
-                        'msg' => 'No se enviaron los campos necesarios, verificar.',
+                        'msg' => 'No se encontraron registros en el sistema.',
+                        'data' => array(),
+                    );
+                    break;
+  
+                case 'EXCEPTION':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => $response['result']->getMessage(),
                         'data' => array()
                     );
-                }
-                
-            } else {
-                // --
-                $json = array(
-                    'status' => 'ERROR',
-                    'type' => 'warning',
-                    'msg' => 'No se enviaron los campos necesarios, verificar.',
-                    'data' => array()
-                );
+                    break;
             }
-            
         } else {
             // --
             $json = array(
@@ -289,286 +81,417 @@ class C_Proforma extends Controller {
         // --
         header('Content-Type: application/json');
         echo json_encode($json);
-        
     }
-  
+
     // --
-    public function update_clients() {
-      // --
-      $this->functions->validate_session($this->segment->get('isActive'));
-      // --
-      $request = $_SERVER['REQUEST_METHOD'];
-      // --
-      if ($request === 'POST') {
-          // --
-          $input = json_decode(file_get_contents('php://input'), true);
-          if (empty($input)) {
-              $input = filter_input_array(INPUT_POST);
-          }
-          // --
-          if (!empty($input['id_clients']) && 
-              !empty($input['document_type']) && 
-              !empty($input['name']) &&
-              !empty($input['document_number']) &&
-              !empty($input['address']) &&
-              !empty($input['phone'])&&
-              !empty($input['business_name']) &&
-              !empty($input['email']) &&
-              !empty($input['description_document_type'])
-          ) {
-              // --
-              $id_clients = $this->functions->clean_string($input['id_clients']);
-              $document_type = $this->functions->clean_string($input['document_type']);
-              $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
-              $document_number = $this->functions->clean_string($input['document_number']);
-              $description_document_type = $this->functions->clean_string($input['description_document_type']);   
-              $address = $this->functions->clean_string($input['address']);
-              $phone = $this->functions->clean_string($input['phone']);
-              $business_name = $this->functions->clean_string($input['business_name']);
-              $email = $this->functions->clean_string($input['email']);
-              // --
-              $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
-              // --
-              if ($is_verified) {
-                  // -- 
-                  $bind = array(
-                      'id_clients' => $id_clients,
-                      'id_document_type' => $document_type,
-                      'name' => $name,
-                      'document_number' => $document_number,
-                      'address' => $address,
-                      'phone' => $phone,
-                      'business_name' => $business_name,
-                      'email' => $email
+    public function get_proforma_by_id() {
+        // --
+        $this->functions->validate_session($this->segment->get('isActive'));
+        // --
+        $request = $_SERVER['REQUEST_METHOD'];
+        // --
+        if ($request === 'GET') {
+            // --
+            $input = json_decode(file_get_contents('php://input'), true);
+            if (empty($input)) {
+                $input = filter_input_array(INPUT_GET);
+            }
+            // --
+            if (!empty($input['id_proforma'])) {
+                // --
+                $obj = $this->load_model('Proforma');
+                // --
+                $bind = array('id_proforma' => intval($input['id_proforma']));
+                // --
+                $response = $obj->get_proforma_by_id($bind);
+                // --
+                switch ($response['status']) {
+                    // --
+                    case 'OK':
+                        // --
+                        $json = array(
+                            'status' => 'OK',
+                            'type' => 'success',
+                            'msg' => 'Registro encontrado.',
+                            'data' => $response['result']
+                        );
+                        break;
   
-                  );
-                  // --
-                  $obj = $this->load_model('Clients');
-                  $response = $obj->update_clients($bind);
-                  // --
-                  switch ($response['status']) {
-                      // --
-                      case 'OK':
-                          // --
-                          $json = array(
-                              'status' => 'OK',
-                              'type' => 'success',
-                              'msg' => 'Registro actualizado en el sistema con éxito.',
-                              'data' => array()
-                          );
-                          // --
-                          break;
+                    case 'ERROR':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No se encontró el registro en el sistema.',
+                            'data' => array(),
+                        );
+                        break;
   
-                      case 'ERROR':
-                          // --
-                          $json = array(
-                              'status' => 'ERROR',
-                              'type' => 'warning',
-                              'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                              'data' => array(),
-                          );
-                          // --
-                          break;
+                    case 'EXCEPTION':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'error',
+                            'msg' => $response['result']->getMessage(),
+                            'data' => array()
+                        );
+                        break;
+                }
+            } else {
+                // --
+                $json = array(
+                    'status' => 'ERROR',
+                    'type' => 'warning',
+                    'msg' => 'No se enviaron los campos necesarios, verificar.',
+                    'data' => array()
+                );
+            }
+        } else {
+            // --
+            $json = array(
+                'status' => 'ERROR',
+                'type' => 'error',
+                'msg' => 'Método no permitido.',
+                'data' => array()
+            ); 
+        }
   
-                      case 'EXCEPTION':
-                          // --
-                          $json = array(
-                              'status' => 'ERROR',
-                              'type' => 'error',
-                              'msg' => $response['result']->getMessage(),
-                              'data' => array()
-                          );
-                          // --
-                          break;
-                  }
-              } else {
-                  $json = array(
-                      'status' => 'ERROR',
-                      'type' => 'warning',
-                      'msg' => 'Número de documento invalido, verificar.',
-                  );
-              }
-  
-          } else {
-              // --
-              $json = array(
-                  'status' => 'ERROR',
-                  'type' => 'warning',
-                  'msg' => 'No se enviaron los campos necesarios, verificar.',
-                  'data' => array()
-              );
-          }
-      
-  
-      } else {
-          // --
-          $json = array(
-              'status' => 'ERROR',
-              'type' => 'error',
-              'msg' => 'Método no permitido.',
-              'data' => array()
-          ); 
-      }
-  
-  
-      // --
-      header('Content-Type: application/json');
-      echo json_encode($json);
+        // --
+        header('Content-Type: application/json');
+        echo json_encode($json);
     }
+
+    // --
+    public function create_proforma() {
+        // --
+        $this->functions->validate_session($this->segment->get('isActive'));
+        // --
+        $request = $_SERVER['REQUEST_METHOD'];
+        // --
+        if ($request === 'POST') {
+            // --
+            $input = json_decode(file_get_contents('php://input'), true);
+            if (empty($input)) {
+                $input = filter_input_array(INPUT_POST);
+            }
+            // --
+            if (!empty($input['id_clients']) &&
+                !empty($input['id_user']) &&
+                !empty($input['id_voucher_type']) &&
+                !empty($input['date_issue']) &&
+                !empty($input['correlative']) &&
+                !empty($input['total_sale']) &&
+                !empty($input['status'])
+            ) {
+                // --
+                $bind = array(
+                    'id_clients' => $this->functions->clean_string($input['id_clients']),
+                    'id_user' => $this->functions->clean_string($input['id_user']),
+                    'id_voucher_type' => $this->functions->clean_string($input['id_voucher_type']),
+                    'date_issue' => $this->functions->clean_string($input['date_issue']),
+                    'correlative' => $this->functions->clean_string($input['correlative']),
+                    'total_sale' => $this->functions->clean_string($input['total_sale']),
+                    'status' => $this->functions->clean_string($input['status'])
+                );
+
+                // --
+                $obj = $this->load_model('Proforma');
+                $response = $obj->create_proforma($bind);
+                // --
+                switch ($response['status']) {
+                    // --
+                    case 'OK':
+                        // --
+                        $json = array(
+                            'status' => 'OK',
+                            'type' => 'success',
+                            'msg' => 'Proforma creada con éxito.',
+                            'data' => array()
+                        );
+                        break;
+
+                    case 'ERROR':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No fue posible crear la proforma, verificar.',
+                            'data' => array());
+                            break;
+                            case 'EXCEPTION':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'error',
+                                    'msg' => $response['result']->getMessage(),
+                                    'data' => array()
+                                );
+                                break;
+                        }
+                    } else {
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No se enviaron los campos necesarios, verificar.',
+                            'data' => array()
+                        );
+                    }
+                } else {
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => 'Método no permitido.',
+                        'data' => array()
+                    ); 
+                }
+            
+                // --
+                header('Content-Type: application/json');
+                echo json_encode($json);
+            }
+            
+            // --
+            public function update_proforma() {
+                // --
+                $this->functions->validate_session($this->segment->get('isActive'));
+                // --
+                $request = $_SERVER['REQUEST_METHOD'];
+                // --
+                if ($request === 'POST') {
+                    // --
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    if (empty($input)) {
+                        $input = filter_input_array(INPUT_POST);
+                    }
+                    // --
+                    if (!empty($input['id_proforma']) && 
+                        !empty($input['id_clients']) &&
+                        !empty($input['id_user']) &&
+                        !empty($input['id_voucher_type']) &&
+                        !empty($input['date_issue']) &&
+                        !empty($input['correlative']) &&
+                        !empty($input['total_sale']) &&
+                        !empty($input['status'])
+                    ) {
+                        // --
+                        $bind = array(
+                            'id_proforma' => $this->functions->clean_string($input['id_proforma']),
+                            'id_clients' => $this->functions->clean_string($input['id_clients']),
+                            'id_user' => $this->functions->clean_string($input['id_user']),
+                            'id_voucher_type' => $this->functions->clean_string($input['id_voucher_type']),
+                            'date_issue' => $this->functions->clean_string($input['date_issue']),
+                            'correlative' => $this->functions->clean_string($input['correlative']),
+                            'total_sale' => $this->functions->clean_string($input['total_sale']),
+                            'status' => $this->functions->clean_string($input['status'])
+                        );
+            
+                        // --
+                        $obj = $this->load_model('Proforma');
+                        $response = $obj->update_proforma($bind);
+                        // --
+                        switch ($response['status']) {
+                            // --
+                            case 'OK':
+                                // --
+                                $json = array(
+                                    'status' => 'OK',
+                                    'type' => 'success',
+                                    'msg' => 'Proforma actualizada con éxito.',
+                                    'data' => array()
+                                );
+                                break;
+            
+                            case 'ERROR':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'warning',
+                                    'msg' => 'No fue posible actualizar la proforma, verificar.',
+                                    'data' => array(),
+                                );
+                                break;
+            
+                            case 'EXCEPTION':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'error',
+                                    'msg' => $response['result']->getMessage(),
+                                    'data' => array()
+                                );
+                                break;
+                        }
+                    } else {
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No se enviaron los campos necesarios, verificar.',
+                            'data' => array()
+                        );
+                    }
+                } else {
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => 'Método no permitido.',
+                        'data' => array()
+                    ); 
+                }
+            
+                // --
+                header('Content-Type: application/json');
+                echo json_encode($json);
+            }
+            
+            // --
+            public function delete_proforma() {
+                // --
+                $this->functions->validate_session($this->segment->get('isActive'));
+                // --
+                $request = $_SERVER['REQUEST_METHOD'];
+                // --
+                if ($request === 'POST') {
+                    // --
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    if (empty($input)) {
+                        $input = filter_input_array(INPUT_POST);
+                    }
+                    // --
+                    if (!empty($input['id_proforma'])) {
+                        // --
+                        $id_proforma = $this->functions->clean_string($input['id_proforma']); // Asegúrate de que esta línea esté correcta
+                        // --
+                        $bind = array(
+                            'id_proforma' => $id_proforma
+                        );
+                        // --
+                        $obj = $this->load_model('Proforma');
+                        $response = $obj->delete_proforma($bind);
+                        // --
+                        switch ($response['status']) {
+                            // --
+                            case 'OK':
+                                // --
+                                $json = array(
+                                    'status' => 'OK',
+                                    'type' => 'success',
+                                    'msg' => 'Registro eliminado del sistema con éxito.',
+                                    'data' => array()
+                                );
+                                break;
+            
+                            case 'ERROR':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'warning',
+                                    'msg' => 'No fue posible eliminar el registro, verificar.',
+                                    'data' => array(),
+                                );
+                                break;
+            
+                            case 'EXCEPTION':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'error',
+                                    'msg' => $response['result']->getMessage(),
+                                    'data' => array()
+                                );
+                                break;
+                        }
+                    } else {
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No se enviaron los campos necesarios, verificar.',
+                            'data' => array()
+                        );
+                    }
+                } else {
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => 'Método no permitido.',
+                        'data' => array()
+                    ); 
+                }
+            
+                // --
+                header('Content-Type: application/json');
+                echo json_encode($json);
+            }
+            
+            // --
+            public function get_business_name() {
+                // --
+                $this->functions->validate_session($this->segment->get('isActive'));
+                // --
+                $request = $_SERVER['REQUEST_METHOD'];
+                // --
+                if ($request === 'GET') {
+                    // --
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    if (empty($input)) {
+                        $input = filter_input_array(INPUT_GET);
+                    }
+                    // --
+                    $obj = $this->load_model('Clients');
+                    // --
+                    $response = $obj->get_business_name();
+                    // --
+                    switch ($response['status']) {
+                        // --
+                        case 'OK':
+                            // --
+                            $json = array(
+                                'status' => 'OK',
+                                'type' => 'success',
+                                'msg' => 'Listado de registros encontrados.',
+                                'data' => $response['result']
+                            );
+                            break;
+            
+                        case 'ERROR':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'warning',
+                                'msg' => 'No se encontraron registros en el sistema.',
+                                'data' => array(),
+                            );
+                            break;
+            
+                        case 'EXCEPTION':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'error',
+                                'msg' => $response['result']->getMessage(),
+                                'data' => array()
+                            );
+                            break;
+                    }
+                } else {
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => 'Método no permitido.',
+                        'data' => array()
+                    ); 
+                }
+            
+                // --
+                header('Content-Type: application/json');
+                echo json_encode($json);
+            }
+        }
     
-    // --
-    public function delete_proforma() {
-      // --
-      $this->functions->validate_session($this->segment->get('isActive'));
-      // --
-      $request = $_SERVER['REQUEST_METHOD'];
-      // --
-      if ($request === 'POST') {
-          // --
-          $input = json_decode(file_get_contents('php://input'), true);
-          if (empty($input)) {
-              $input = filter_input_array(INPUT_POST);
-          }
-          // --
-          if (!empty($input['id_proforma'])) {
-              // --
-              $id_proforma = $this->functions->clean_string($input['id_proforma']);
-              // --
-              $bind = array(
-                  'id_proforma' => $id_proforma
-              );
-              // --
-              $obj = $this->load_model('Proforma');
-              $response = $obj->delete_proforma($bind);
-              // --
-              switch ($response['status']) {
-                  // --
-                  case 'OK':
-                      // --
-                      $json = array(
-                          'status' => 'OK',
-                          'type' => 'success',
-                          'msg' => 'Registro eliminado del sistema con éxito.',
-                          'data' => array()
-                      );
-                      // --
-                      break;
-  
-                  case 'ERROR':
-                      // --
-                      $json = array(
-                          'status' => 'ERROR',
-                          'type' => 'warning',
-                          'msg' => 'No fue posible eliminar el registro, verificar.',
-                          'data' => array(),
-                      );
-                      // --
-                      break;
-  
-                  case 'EXCEPTION':
-                      // --
-                      $json = array(
-                          'status' => 'ERROR',
-                          'type' => 'error',
-                          'msg' => $response['result']->getMessage(),
-                          'data' => array()
-                      );
-                      // --
-                      break;
-              }
-          } else {
-              // --
-              $json = array(
-                  'status' => 'ERROR',
-                  'type' => 'warning',
-                  'msg' => 'No se enviaron los campos necesarios, verificar.',
-                  'data' => array()
-              );
-          }
-          
-      } else {
-          // --
-          $json = array(
-              'status' => 'ERROR',
-              'type' => 'error',
-              'msg' => 'Método no permitido.',
-              'data' => array()
-          ); 
-      }
-  
-      // --
-      header('Content-Type: application/json');
-      echo json_encode($json);
-    }
-  
-     //--
-     public function get_business_name() {
-      // --
-      $this->functions->validate_session($this->segment->get('isActive'));
-      // --
-      $request = $_SERVER['REQUEST_METHOD'];
-      // --
-      if ($request === 'GET') {
-          // --
-          $input = json_decode(file_get_contents('php://input'), true);
-          if (empty($input)) {
-              $input = filter_input_array(INPUT_GET);
-          }
-          // --
-          $obj = $this->load_model('Clients');
-          // --
-          $response = $obj->get_business_name();
-          // --
-          switch ($response['status']) {
-              // --
-              case 'OK':
-                  // --
-                  $json = array(
-                      'status' => 'OK',
-                      'type' => 'success',
-                      'msg' => 'Listado de registros encontrados.',
-                      'data' => $response['result']
-                  );
-                  // --
-                  break;
-  
-              case 'ERROR':
-                  // --
-                  $json = array(
-                      'status' => 'ERROR',
-                      'type' => 'warning',
-                      'msg' => 'No se encontraron registros en el sistema.',
-                      'data' => array(),
-                  );
-                  // --
-                  break;
-  
-              case 'EXCEPTION':
-                  // --
-                  $json = array(
-                      'status' => 'ERROR',
-                      'type' => 'error',
-                      'msg' => $response['result']->getMessage(),
-                      'data' => array()
-                  );
-                  // --
-                  break;
-          }
-          
-      } else {
-          // --
-          $json = array(
-              'status' => 'ERROR',
-              'type' => 'error',
-              'msg' => 'Método no permitido.',
-              'data' => array()
-          ); 
-      }
-  
-      // --
-      header('Content-Type: application/json');
-      echo json_encode($json);
-  }
-  
-  
-  }
+                        
